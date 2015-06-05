@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+        <title>DJTaxi</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+        <script type="text/javascript">
+
+        
+     	// Variable para la localizacion
+      	var lc;
+      	// variable de PhoneGap 
+      	var pgr = false;
+
+      	function onBodyLoad() {
+        	// agrega un listener para detectar eventos
+        	document.addEventListener("deviceready", onDeviceReady, false);
+      	}
+
+      	function onDeviceReady() {
+        	// Encuentra el tag html donde se escribira la ubicación
+        	lc = document.getElementById("locationInfo");
+        	// Bandera para saber que todo va bien con Phonegap
+        	pgr = true;
+      	}
+
+      	function getLocation() {
+        	if(pgr == true) {
+          		var locOptions = {
+            	timeout : 5000,
+            	enableHighAccuracy : true
+          		};
+          		// Encuentra la ubicación actual
+          		navigator.geolocation.getCurrentPosition(onLocationSuccess, onLocationError, locOptions);
+          		// Limpia el texto mientras se encuentra la ubicación
+          		lc.innerHTML = "Leyendo la localización...";
+        	} else {
+          		alert("PhoneGap no funciona.");
+        	}
+      	}
+
+      	function onLocationSuccess(loc) {
+        	alert("onLocationSuccess");
+        	// Haya la hora actual
+        	var d = new Date(loc.timestamp);
+        	// Reemplaza el texto html con los datos encontrados
+        	lc.innerHTML = '<b>Current Location</b><hr /><b>Latitude</b>: ' + loc.coords.latitude + '<br /><b>Longitude</b>: ' + loc.coords.longitude + '<br /><b>Altitude</b>: ' + loc.coords.altitude + '<br /><b>Accuracy</b>: ' + loc.coords.accuracy + '<br /><b>Altitude Accuracy</b>: ' + loc.coords.altitudeAccuracy + '<br /><b>Heading</b>: ' + loc.coords.heading + '<br /><b>Speed</b>: ' + loc.coords.speed + '<br /><b>Timestamp</b>: ' + d.toLocaleString();
+      	}
+
+      	function onLocationError(e) {
+        	alert("Geolocation error: #" + e.code + "\n" + e.message);
+      	}
+    	</script>
+    </head>
+    <body onload="onBodyLoad()">
+      <header>
+        <div class="col-md-12">
+          <p>.</p>
+        </div>
+      </header>
+
+      <div class="col-md-12">
+        <p class="right"> Hora</p>
+      </div>
+
+    	<input type="button" value="Refrescar la ubicación" onclick="getLocation();">
+        <hr />
+    	<p id="locationInfo">
+      	Ubicación...
+    	</p>
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-4">primer cuadrito</div>
+          <div class="col-sm-4">segundo cuadrito</div>
+          <div class="col-sm-4">tercer cuadrito</div>
+        </div>
+      </div>
+
+    </body>
+</html>

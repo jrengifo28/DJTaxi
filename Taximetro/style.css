@@ -1,0 +1,11 @@
+body{
+	background-color: #ddd;
+}
+
+header{
+	background-image: url("img1.png"); 
+}
+
+.right{
+	float: right;
+}
