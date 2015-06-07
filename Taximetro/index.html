@@ -61,26 +61,47 @@
     </head>
     <body onload="onBodyLoad()">
       <header>
-        <div class="col-md-12">
-          <p>.</p>
+        <div class"container" class="row">
+          <div class="col-md-6">
+            <p></p></br>
+          </div>
+
+          <div class="col-md-6">
+            <p></p>
+          </div>
         </div>
       </header>
-
-      <div class="col-md-12">
-        <p class="right"> Hora</p>
-      </div>
-
-    	<input type="button" value="Refrescar la ubicación" onclick="getLocation();">
+      <p id="title">DJ - Taxi</p>
         <hr />
     	<p id="locationInfo">
-      	Ubicación...
+      	<div class="progress">
+          <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+          ...Calculando Ubicación y Contabilizando...
+          </div>
+        </div>
     	</p>
 
       <div class="container-fluid">
         <div class="row">
-          <div class="col-sm-4">primer cuadrito</div>
-          <div class="col-sm-4">segundo cuadrito</div>
-          <div class="col-sm-4">tercer cuadrito</div>
+          <div class="col-sm-4">
+
+            <center><input type="button" class="btn btn-warning" value="Empezar" onclick="getLocation();"></center>
+
+          </div>
+
+          <div class="col-sm-4">
+            <div class="jumbotron">
+              <center>
+                <p>Contador - Taximetro</p>
+              </center>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+
+            <center><input type="button" class="btn btn-warning" value="Terminar" onclick="getLocation();"></center>
+
+          </div>
         </div>
       </div>
 
