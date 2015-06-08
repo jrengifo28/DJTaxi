@@ -6,16 +6,16 @@ var lc;
 // variable de PhoneGap 
 var pgr = false;
 
-int minimo = 4300; //pesos
-int unidadMinima = 48;
-int banderazo = 17; //unidades
-int metrosPorUnidad = 80; //metros
-int valorUnidad = 90; //pesos
-int recargoPuertaPuerta = 500; //pesos
-int recargoNocheFiesta = 1100; //pesos
-int tiempoEspera = 50; //segundos
-int valorTiempoEspera = 90; //pesos
-int inicioNocturna = 20;
+minimo = 4300; //pesos
+unidadMinima = 48;
+banderazo = 17; //unidades
+metrosPorUnidad = 80; //metros
+valorUnidad = 90; //pesos
+recargoPuertaPuerta = 500; //pesos
+recargoNocheFiesta = 1100; //pesos
+tiempoEspera = 50; //segundos
+valorTiempoEspera = 90; //pesos
+inicioNocturna = 20;
 
 // FUNCTIONS
 
