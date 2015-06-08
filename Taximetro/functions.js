@@ -6,7 +6,16 @@ var lc;
 // variable de PhoneGap 
 var pgr = false;
 
-
+minimo = 4300; //pesos
+unidadMinima = 48;
+banderazo = 17; //unidades
+metrosPorUnidad = 80; //metros
+valorUnidad = 90; //pesos
+recargoPuertaPuerta = 500; //pesos
+recargoNocheFiesta = 1100; //pesos
+tiempoEspera = 50; //segundos
+valorTiempoEspera = 90; //pesos
+inicioNocturna = 20;
 
 // FUNCTIONS
 
@@ -26,6 +35,31 @@ function onDeviceReady()
     pgr = true;
 }
 
+function setPoints(distancia){
+	//Si la distancia no cambia, debe incrementar las unidades dependiendo del tiempo que se esté parado, de lo contrario, calcular distancia
+}
+
+function getPay(unidad, fecha, puertaAPuerta){
+	precio = 0;
+	hora = 0; //tomar hora del parámetro fecha
+	dia = "martes"; //tomar dia del parámetro fecha
+	if (unidad <= unidadMinima){
+		precio = minimo;
+	}
+	else{
+		precio = unidad*valorUnidad;
+	}
+
+	if (dia == "sábado" || dia == "domingo" || hora >= 20){
+		precio = precio + recargoNocheFiesta;
+	}
+	if (puertaAPuerta == true){
+		precio = precio + recargoPuertaPuerta;
+	}
+
+	document.getElementById("counter").innerHTML = precio;
+
+}
 
 function getLocation() 
 {
