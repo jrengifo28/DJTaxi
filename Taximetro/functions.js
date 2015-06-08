@@ -7,7 +7,7 @@ var lc;
 var pgr = false;
 
 minimo = 4300; //pesos
-unidadMinima = 48;
+unidadMinima = 48; //unidades
 banderazo = 17; //unidades
 metrosPorUnidad = 80; //metros
 valorUnidad = 90; //pesos
@@ -15,7 +15,33 @@ recargoPuertaPuerta = 500; //pesos
 recargoNocheFiesta = 1100; //pesos
 tiempoEspera = 50; //segundos
 valorTiempoEspera = 90; //pesos
-inicioNocturna = 20;
+inicioNocturna = 20; //hora
+
+var fecha = new Date();
+
+var dia = new Array(7);
+dia[0]="Domingo";
+dia[1]="Lunes";
+dia[2]="Martes";
+dia[3]="Miercoles";
+dia[4]="Jueves";
+dia[5]="Viernes";
+dia[6]="Sabado";
+
+var mes = new Array(12);
+mes[0]="Enero";
+mes[1]="Febrero";
+mes[2]="Marzo";
+mes[3]="Abril";
+mes[4]="Mayo";
+mes[5]="Junio";
+mes[6]="Julio";
+mes[7]="Agosto";
+mes[8]="Septiembre";
+mes[9]="Octubre";
+mes[10]="Noviembre";
+mes[11]="Diciembre";
+
 
 // FUNCTIONS
 
@@ -94,4 +120,10 @@ function onLocationSuccess(loc)
 function onLocationError(e) 
 {
 	alert("Geolocation error: #" + e.code + "\n" + e.message);
+}
+
+
+function fecha()
+{
+	document.write('Fecha: '+fecha.getDate(),'<br>Dia de la semana: '+fecha.getDay(),'<br>Mes (0 al 11): '+fecha.getMonth(),'<br>Año: '+fecha.getFullYear(),'<br>Hora: '+fecha.getHours(),'<br>Hora UTC: '+fecha.getUTCHours(),'<br>Minutos: '+fecha.getMinutes(),'<br>Segundos: '+fecha.getSeconds());
 }
