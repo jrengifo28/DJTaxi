@@ -17,6 +17,16 @@ tiempoEspera = 50; //segundos
 valorTiempoEspera = 90; //pesos
 inicioNocturna = 20;
 
+
+// VARIABLES GLOBALES
+antLatitud = 0;
+antLongitud = 0;
+latitud = 0;
+longitud = 0;
+segundosEspera = 0;
+unidades = banderazo;
+contador = 0;
+
 // FUNCTIONS
 
 
@@ -24,6 +34,8 @@ function onBodyLoad()
 {
 	// agrega un listener para detectar eventos
     document.addEventListener("deviceready", onDeviceReady, false);
+
+    setInterval(getTime,5000);
 }
 
 
@@ -35,8 +47,110 @@ function onDeviceReady()
     pgr = true;
 }
 
-function setPoints(distancia){
+function Geolocation(){
+	if(pgr == false) 
+	{
+		alert("PhoneGap no funciona.");
+	}
+	else{
+		setInterval(getLocation,1000);
+	}
+}
+
+function getInitLocation(){
+	getLocation();
+}
+
+function getLocation() 
+{
+	
+	var locOptions = {
+       	timeout : 900,
+        enableHighAccuracy : true
+    };
+
+    // Encuentra la ubicación actual
+    navigator.geolocation.getCurrentPosition(onLocationSuccess, onLocationError, locOptions);
+    // Limpia el texto mientras se encuentra la ubicación
+    lc.innerHTML = "Leyendo la localización...";
+}
+
+
+function onLocationSuccess(loc) 
+{
+    // Haya la hora actual
+    var d = new Date(loc.timestamp);
+    // Reemplaza el texto html con los datos encontrados
+    lc.innerHTML = '<b>Current Location</b><hr /><b>Latitude</b>: ' + loc.coords.latitude + 
+    '<br /><b>Longitude</b>: ' + loc.coords.longitude + 
+    '<br /><b>Altitude</b>: ' + loc.coords.altitude + 
+    '<br /><b>Accuracy</b>: ' + loc.coords.accuracy + 
+    '<br /><b>Altitude Accuracy</b>: ' + loc.coords.altitudeAccuracy + 
+    '<br /><b>Heading</b>: ' + loc.coords.heading + 
+    '<br /><b>Speed</b>: ' + loc.coords.speed + 
+    '<br /><b>Timestamp</b>: ' + d.toLocaleString();
+
+    latitud = loc.coords.latitude;
+    longitud = loc.coords.longitude;
+    document.getElementById("counter").innerHTML = latitud;
+    //setPoints();
+
+}
+
+function onLocationInit(loc) 
+{
+    var d = new Date(loc.timestamp);
+    day = d.getDay();
+    if (day == "1")
+    	dia = "Lunes";
+    else if (day == "2")
+    	dia = "Martes";
+    else if (day == "3")
+    	dia = "Miércoles";
+    else if (day == "4")
+    	dia = "Jueves";
+    else if (day == "5")
+    	dia = "Viernes";
+    else if (day == "6")
+    	dia = "Sábado";
+    else if (day == "7")
+    	dia = "Domingo";
+
+    //document.getElementById("inicio").innerHTML = '<br /><b>Hora</b>: ' + dia + d.getHours() + ":" + d.getMinutes();
+    document.getElementById("inicio").innerHTML = '<br /><b>Hora</b>: ' + dia + d.getHours() + ":" + d.getMinutes();
+    //document.getElementById("inicio").innerHTML = '<br /><b>Hora</b>: ' + d.toLocaleString();
+
+}
+
+function onLocationError(e) 
+{
+	alert("Geolocation error: #" + e.code + "\n" + e.message);
+}
+
+
+function setPoints(){
+	if ( contador == 0){
+		antLongitud = longitud;
+		antLatitud = latitud;
+	}
+	contador = contador +1;
 	//Si la distancia no cambia, debe incrementar las unidades dependiendo del tiempo que se esté parado, de lo contrario, calcular distancia
+	if (antLongitud == longitud){
+		if (segundosEspera >= tiempoEspera){
+			unidades = unidades + 1;
+			segundosEspera = 0;
+		}
+		else{
+			segundosEspera = segundosEspera + 1;
+		}
+	}
+	else if (sqrt((antLatitud-latitud)^2+(antLongitud-longitud)^2) >= metrosPorUnidad){
+		unidades = unidades + 1;
+		antLongitud = longitud;
+		antLatitud = latitud;
+	}
+	document.getElementById("counter").innerHTML = unidades;
+
 }
 
 function getPay(unidad, fecha, puertaAPuerta){
@@ -61,37 +175,12 @@ function getPay(unidad, fecha, puertaAPuerta){
 
 }
 
-function getLocation() 
-{
-	if(pgr == true) 
-	{
-		var locOptions = {
-        timeout : 5000,
+function getTime () {
+	var locOptions = {
+       	timeout : 5000,
         enableHighAccuracy : true
     };
+
     // Encuentra la ubicación actual
-    navigator.geolocation.getCurrentPosition(onLocationSuccess, onLocationError, locOptions);
-    // Limpia el texto mientras se encuentra la ubicación
-    lc.innerHTML = "Leyendo la localización...";
-    } 
-    else
-    {
-    	alert("PhoneGap no funciona.");
-    }
-}
-
-
-function onLocationSuccess(loc) 
-{
-	alert("onLocationSuccess");
-    // Haya la hora actual
-    var d = new Date(loc.timestamp);
-    // Reemplaza el texto html con los datos encontrados
-    lc.innerHTML = '<b>Current Location</b><hr /><b>Latitude</b>: ' + loc.coords.latitude + '<br /><b>Longitude</b>: ' + loc.coords.longitude + '<br /><b>Altitude</b>: ' + loc.coords.altitude + '<br /><b>Accuracy</b>: ' + loc.coords.accuracy + '<br /><b>Altitude Accuracy</b>: ' + loc.coords.altitudeAccuracy + '<br /><b>Heading</b>: ' + loc.coords.heading + '<br /><b>Speed</b>: ' + loc.coords.speed + '<br /><b>Timestamp</b>: ' + d.toLocaleString();
-}
-
-
-function onLocationError(e) 
-{
-	alert("Geolocation error: #" + e.code + "\n" + e.message);
+    navigator.geolocation.getCurrentPosition(onLocationInit, onLocationError, locOptions);
 }

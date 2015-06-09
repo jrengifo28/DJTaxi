@@ -45,21 +45,25 @@
         <div class="row">
           <div class="col-sm-4">
 
-            <center><input type="button" class="btn btn-warning" value="Empezar" onclick="getLocation();"></center>
+            <center><input type="button" class="btn btn-warning" value="Empezar" onclick="Geolocation();"></center>
 
           </div>
 
           <div class="col-sm-4">
             <div class="jumbotron">
               <center>
-                <p id="counter">Contador - Taximetro</p>
+                <p id="counter"></p>
               </center>
             </div>
           </div>
 
           <div class="col-sm-4">
 
-            <center><input type="button" class="btn btn-warning" value="Terminar" onclick="getLocation();"></center>
+            <p id="fechaHora"> </p>
+            <p id="inicio"> </p>
+            <p id="precioActual"> </p>
+
+            <center><input type="button" class="btn btn-warning" value="Terminar" onclick="Geolocation();"></center>
 
           </div>
         </div>
