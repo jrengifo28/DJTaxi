@@ -117,7 +117,7 @@ function onLocationInit(loc)
     	dia = "Domingo";
 
     //document.getElementById("inicio").innerHTML = '<br /><b>Hora</b>: ' + dia + d.getHours() + ":" + d.getMinutes();
-    document.getElementById("inicio").innerHTML = '<br /><b>Hora</b>: ' + dia + d.getHours() + ":" + d.getMinutes();
+    document.getElementById("fechaHora").innerHTML = '<br /><b>Hora</b>: ' + dia + " " + d.getHours() + ":" + d.getMinutes();
     //document.getElementById("inicio").innerHTML = '<br /><b>Hora</b>: ' + d.toLocaleString();
 
 }
@@ -155,8 +155,24 @@ function setPoints(){
 
 function getPay(unidad, fecha, puertaAPuerta){
 	precio = 0;
-	hora = 0; //tomar hora del parámetro fecha
-	dia = "martes"; //tomar dia del parámetro fecha
+	hour = fecha.getHours();
+	hora = parseInt(hour);
+	day = fecha.getDay();
+	if (day == "1")
+    	dia = "Lunes";
+    else if (day == "2")
+    	dia = "Martes";
+    else if (day == "3")
+    	dia = "Miércoles";
+    else if (day == "4")
+    	dia = "Jueves";
+    else if (day == "5")
+    	dia = "Viernes";
+    else if (day == "6")
+    	dia = "Sábado";
+    else if (day == "7")
+    	dia = "Domingo";
+
 	if (unidad <= unidadMinima){
 		precio = minimo;
 	}
@@ -164,7 +180,7 @@ function getPay(unidad, fecha, puertaAPuerta){
 		precio = unidad*valorUnidad;
 	}
 
-	if (dia == "sábado" || dia == "domingo" || hora >= 20){
+	if (dia == "Sábado" || dia == "Domingo" || hora >= 20){
 		precio = precio + recargoNocheFiesta;
 	}
 	if (puertaAPuerta == true){
