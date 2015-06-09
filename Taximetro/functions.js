@@ -35,7 +35,7 @@ function onBodyLoad()
 	// agrega un listener para detectar eventos
     document.addEventListener("deviceready", onDeviceReady, false);
 
-    setInterval(getTime,5000);
+    setInterval(getTime,100);
 }
 
 
@@ -53,7 +53,7 @@ function Geolocation(){
 		alert("PhoneGap no funciona.");
 	}
 	else{
-		setInterval(getLocation,1000);
+		setInterval(getLocation,0);
 	}
 }
 
@@ -65,7 +65,7 @@ function getLocation()
 {
 	
 	var locOptions = {
-       	timeout : 900,
+       	timeout : 1000,
         enableHighAccuracy : true
     };
 
@@ -82,13 +82,7 @@ function onLocationSuccess(loc)
     var d = new Date(loc.timestamp);
     // Reemplaza el texto html con los datos encontrados
     lc.innerHTML = '<b>Current Location</b><hr /><b>Latitude</b>: ' + loc.coords.latitude + 
-    '<br /><b>Longitude</b>: ' + loc.coords.longitude + 
-    '<br /><b>Altitude</b>: ' + loc.coords.altitude + 
-    '<br /><b>Accuracy</b>: ' + loc.coords.accuracy + 
-    '<br /><b>Altitude Accuracy</b>: ' + loc.coords.altitudeAccuracy + 
-    '<br /><b>Heading</b>: ' + loc.coords.heading + 
-    '<br /><b>Speed</b>: ' + loc.coords.speed + 
-    '<br /><b>Timestamp</b>: ' + d.toLocaleString();
+    '<br /><b>Longitude</b>: ' + loc.coords.longitude;
 
     latitud = loc.coords.latitude;
     longitud = loc.coords.longitude;
@@ -124,7 +118,10 @@ function onLocationInit(loc)
 
 function onLocationError(e) 
 {
-	alert("Geolocation error: #" + e.code + "\n" + e.message);
+	if (e.code != 3){
+		alert("Geolocation error: #" + e.code + "\n" + e.message);
+	}
+	
 }
 
 
